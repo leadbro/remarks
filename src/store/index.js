@@ -13,7 +13,19 @@ export default new Vuex.Store({
       }
     ]
   },
-  mutations: {},
+  mutations: {
+    updateList(s, n) {
+      s.list = n;
+    },
+    addTask(s, p) {
+      s.list = {
+        ...s.list,
+        p
+      };
+    },
+    removeTask() {},
+    updateTask() {}
+  },
   actions: {},
   modules: {}
 });
