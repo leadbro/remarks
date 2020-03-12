@@ -17,15 +17,15 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
-  computed: {},
   props: {
     value: {
       type: String,
       default: ""
     }
-  }
+  },
+  data() {
+    return {};
+  },
+  computed: {}
 };
 </script>

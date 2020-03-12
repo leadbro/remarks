@@ -9,9 +9,34 @@ export default new Vuex.Store({
       {
         id: 0,
         text: "Сварить суп",
-        isDone: false
+        isDone: false,
+        tasks: [
+          {
+            id: 0,
+            text: "Лук",
+            isDone: false,
+            order: 1
+          },
+          {
+            id: 1,
+            text: "Курица",
+            isDone: true,
+            order: 0
+          }
+        ]
+      },
+      {
+        id: 1,
+        text: "Сделать тестовое",
+        isDone: true,
+        tasks: []
       }
     ]
+  },
+  getters: {
+    getList(s) {
+      return s.list;
+    }
   },
   mutations: {
     updateList(s, n) {

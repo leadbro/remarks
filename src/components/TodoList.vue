@@ -1,6 +1,6 @@
 <template>
   <section>
-    <TodoItem v-for="item in items" :key="item.id" />
+    <TodoItem v-for="item in items" :key="item.id" :text="item.text" />
   </section>
 </template>
 
@@ -12,10 +12,15 @@ export default {
   components: {
     TodoItem
   },
+  data() {
+    return {};
+  },
   methods: {},
-  data() {},
   computed: {
-    ...mapGetters(["list"])
+    ...mapGetters(["getList"]),
+    items() {
+      return this.getList;
+    }
   }
 };
 </script>

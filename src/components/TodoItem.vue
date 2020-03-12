@@ -1,7 +1,14 @@
 <template>
   <figure>
-    <header>{{ name }}</header>
-    <form action=""></form>
+    <header>{{ text }}</header>
+    <form action="">
+      <TodoTask
+        v-for="task in tasks"
+        :key="task.id"
+        :text="task.text"
+        :is-done="task.isDone"
+      />
+    </form>
     <footer>
       <button>Save</button>
       <button>Cancel</button>
@@ -11,3 +18,18 @@
     </footer>
   </figure>
 </template>
+
+<script>
+import TodoTask from "./TodoTask.vue";
+export default {
+  components: {
+    TodoTask
+  },
+  props: {
+    text: {
+      type: String,
+      default: ""
+    }
+  }
+};
+</script>
