@@ -1,6 +1,12 @@
 <template>
-  <section>
-    <TodoItem v-for="item in items" :key="item.id" :text="item.text" />
+  <section class="todo-list">
+    <TodoItem
+      v-for="item in items"
+      :key="item.id"
+      class="todo-list__item"
+      :text="item.text"
+      :tasks="item.tasks"
+    />
   </section>
 </template>
 
@@ -24,3 +30,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.todo-list {
+  display: flex;
+
+  &__item {
+    width: calc(100% / 3);
+  }
+}
+</style>

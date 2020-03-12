@@ -13,7 +13,7 @@ export default new Vuex.Store({
         tasks: [
           {
             id: 0,
-            text: "Лук",
+            text: "Овощи (лук, морковь)",
             isDone: false,
             order: 1
           },
@@ -30,6 +30,25 @@ export default new Vuex.Store({
         text: "Сделать тестовое",
         isDone: true,
         tasks: []
+      },
+      {
+        id: 3,
+        text: "Помыть посуду",
+        isDone: false,
+        tasks: [
+          {
+            id: 0,
+            text: "Лук",
+            isDone: false,
+            order: 1
+          },
+          {
+            id: 1,
+            text: "Курица",
+            isDone: true,
+            order: 0
+          }
+        ]
       }
     ]
   },
