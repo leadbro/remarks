@@ -1,15 +1,16 @@
 <template>
-  <div class="todo-task">
+  <div v-click-outside="endEdit" class="todo-task">
     <div class="todo-task__label">
-      <input type="checkbox" :value="isDone" />
-      <div
-        ref="text"
-        :contenteditable="isEditing"
-        class="todo-task__text"
-        @keydown.enter="endEdit"
-      >
-        {{ text }}
-      </div>
+      <BaseCheckbox :disabled="isEditing" @dblclick.native="onCheckboxClick">
+        <div
+          ref="text"
+          :contenteditable="isEditing"
+          class="todo-task__text"
+          @keydown.enter="endEdit"
+        >
+          {{ text }}
+        </div>
+      </BaseCheckbox>
     </div>
     <TodoTaskMenu
       ref="menu"
@@ -19,16 +20,20 @@
     >
       <ButtonIcon icon="save" />
       <ButtonIcon icon="undo" />
-      <ButtonIcon icon="redo" disabled />
       <ButtonIcon icon="trash" />
     </TodoTaskMenu>
   </div>
 </template>
 
 <script>
+import vClickOutside from "v-click-outside";
 import TodoTaskMenu from "./TodoTaskMenu.vue";
+import setCursorToEnd from "@/helpers/setCursorToEnd.js";
 
 export default {
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   components: {
     TodoTaskMenu
   },
@@ -48,10 +53,21 @@ export default {
     };
   },
   computed: {},
+  mounted() {},
   methods: {
+    onCheckboxClick() {
+      this.startEdit();
+    },
     endEdit() {
       this.isEditing = false;
       this.$refs.menu.close();
+    },
+    startEdit() {
+      this.isEditing = true;
+      this.$nextTick(function() {
+        this.$refs.text.focus();
+        setCursorToEnd(this.$refs.text);
+      });
     },
     onMenuClose() {
       this.isEditing = false;
@@ -60,6 +76,7 @@ export default {
       this.isEditing = true;
       this.$nextTick(function() {
         this.$refs.text.focus();
+        setCursorToEnd(this.$refs.text);
       });
     }
   }

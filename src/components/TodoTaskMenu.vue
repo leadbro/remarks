@@ -51,7 +51,8 @@ export default {
     display: inline-flex;
 
     opacity: 0;
-    transition: opacity 0.1s ease-in, transform 0.1s ease-in, max-width 0.1s;
+    transition: opacity 0.1s ease-in, transform 0.1s ease-in,
+      max-width 0.15s ease-in;
 
     transform: rotateZ(-30deg);
     transform-origin: left;
