@@ -34,6 +34,7 @@
 import vClickOutside from "v-click-outside";
 import TodoTaskMenu from "./TodoTaskMenu.vue";
 import setCursorToEnd from "@/helpers/setCursorToEnd.js";
+import { includes } from "lodash";
 
 export default {
   directives: {
@@ -55,7 +56,7 @@ export default {
   data() {
     return {
       isEditing: false,
-      maxlength: 10
+      maxlength: 20
     };
   },
   computed: {},
@@ -68,22 +69,41 @@ export default {
     onCheckboxClick() {
       this.endEdit();
     },
-    onTextEdit(e) {
-      const isCharacterKey = keyCode => {
-        const pattern = /@"[-.?!)(,:]"/i;
-        return !pattern.test(String.fromCharCode(keyCode));
+    isEventKeyAllowed(e) {
+      const allowedKeys = {
+        special: [
+          8 /* BACKSPACE */,
+          35 /* END */,
+          36 /* HOME */,
+          37 /* LEFT */,
+          38 /* UP */,
+          39 /* RIGHT*/,
+          40 /* DOWN */,
+          46 /* DEL*/
+        ],
+        ctrl: [
+          65 /* CTRL + A */,
+          88 /* CTRL + X */,
+          67 /* CTRL + C */,
+          86 /* CTRL + V */,
+          90 /* CTRL + Z */
+        ]
       };
+      return (
+        includes(allowedKeys.special, e.which) ||
+        (e.ctrlKey === true && includes(allowedKeys.ctrl, e.which))
+      );
+    },
+    onTextEdit(e) {
+      let text = e.currentTarget.innerText;
 
-      if (isCharacterKey(e.keyCode)) {
-        if (e.currentTarget.innerText.length >= this.maxlength) {
-          e.preventDefault();
-          return false;
-        }
-      } else {
-        if (e.key === "Enter" || e.key === "Escape") {
-          this.endEdit();
-          return false;
-        }
+      if (this.isEventKeyAllowed(e) && text.length >= this.maxlength) {
+        e.preventDefault();
+        return false;
+      }
+      if (e.key === "Enter" || e.key === "Escape") {
+        this.endEdit();
+        return false;
       }
     },
     endEdit() {
