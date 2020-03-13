@@ -52,5 +52,23 @@ export default {
     margin-bottom: 1rem;
     padding-left: 0;
   }
+
+  footer {
+    display: flex;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: none;
+      border: 1px solid #000;
+      padding: 0.25rem 0.5rem;
+
+      & + button {
+        margin-left: 0.5rem;
+      }
+    }
+  }
 }
 </style>

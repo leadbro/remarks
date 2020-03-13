@@ -8,9 +8,9 @@
       v-on="listeners"
     />
     <span class="base-checkbox__checkbox"></span>
-    <span class="base-checkbox__label">
+    <div class="base-checkbox__label">
       <slot>{{ label }}</slot>
-    </span>
+    </div>
   </label>
 </template>
 
@@ -100,10 +100,10 @@ export default {
       border-top: none;
       border-left: none;
       position: absolute;
-      top: calc(50% - 0.66rem);
-      left: calc(50% - 0.25rem);
-      width: 0.45rem;
-      height: 0.9rem;
+      top: calc(50% - 0.5rem);
+      left: calc(50% - 0.17rem);
+      width: 0.35rem;
+      height: 0.7rem;
       transform: rotateZ(0deg);
       opacity: 0;
       transition: transform 0.3s, opacity 0.2s;
@@ -121,6 +121,8 @@ export default {
   }
   &__label {
     color: var(--color);
+    padding-top: 2px;
+
     a {
       color: inherit;
     }

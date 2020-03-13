@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       isEditing: false,
-      maxlength: 20
+      maxlength: 25
     };
   },
   computed: {},
@@ -97,9 +97,10 @@ export default {
     onTextEdit(e) {
       let text = e.currentTarget.innerText;
 
-      if (this.isEventKeyAllowed(e) && text.length >= this.maxlength) {
-        e.preventDefault();
-        return false;
+      if (text.length >= this.maxlength) {
+        if (!this.isEventKeyAllowed(e)) {
+          e.preventDefault();
+        }
       }
       if (e.key === "Enter" || e.key === "Escape") {
         this.endEdit();
@@ -144,6 +145,8 @@ export default {
 
   &__text {
     border-bottom: 1px solid rgba(255, 255, 255, 0);
+    font-size: 1rem;
+    color: #000;
 
     outline: none;
     transition: border-color 0.1s ease-in;
@@ -151,13 +154,6 @@ export default {
     &[contenteditable="true"] {
       border-bottom-color: rgba(0, 0, 0, 0.4);
     }
-  }
-
-  &__text,
-  &__input {
-    font-family: inherit;
-    font-size: 1.25rem;
-    color: #000;
   }
 
   &__menu {
