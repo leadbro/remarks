@@ -31,6 +31,9 @@ export default {
         this.$emit("close");
       }
     },
+    open() {
+      this.isOpened = true;
+    },
     close() {
       this.isOpened = false;
     }

@@ -76,6 +76,7 @@ export default {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
+
   &__input {
     opacity: 0;
     width: 0;
@@ -90,6 +91,8 @@ export default {
     height: var(--checkbox-size);
     position: relative;
     transition: border-color 0.2s ease-in;
+
+    flex-shrink: 0;
     &:after {
       content: "";
       display: block;

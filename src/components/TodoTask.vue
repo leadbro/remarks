@@ -1,12 +1,17 @@
 <template>
-  <div v-click-outside="endEdit" class="todo-task">
+  <li v-click-outside="endEdit" class="todo-task">
     <div class="todo-task__label">
-      <BaseCheckbox :disabled="isEditing" @dblclick.native="onCheckboxClick">
+      <BaseCheckbox
+        :disabled="isEditing"
+        @click.native="onCheckboxClick"
+        @dblclick.native="onCheckboxDblclick"
+      >
         <div
           ref="text"
           :contenteditable="isEditing"
           class="todo-task__text"
-          @keydown.enter="endEdit"
+          tabindex="0"
+          @keydown="onTextEdit"
         >
           {{ text }}
         </div>
@@ -22,7 +27,7 @@
       <ButtonIcon icon="undo" />
       <ButtonIcon icon="trash" />
     </TodoTaskMenu>
-  </div>
+  </li>
 </template>
 
 <script>
@@ -49,14 +54,37 @@ export default {
   },
   data() {
     return {
-      isEditing: false
+      isEditing: false,
+      maxlength: 10
     };
   },
   computed: {},
   mounted() {},
   methods: {
-    onCheckboxClick() {
+    onCheckboxDblclick() {
       this.startEdit();
+      this.$refs.menu.open();
+    },
+    onCheckboxClick() {
+      this.endEdit();
+    },
+    onTextEdit(e) {
+      const isCharacterKey = keyCode => {
+        const pattern = /@"[-.?!)(,:]"/i;
+        return !pattern.test(String.fromCharCode(keyCode));
+      };
+
+      if (isCharacterKey(e.keyCode)) {
+        if (e.currentTarget.innerText.length >= this.maxlength) {
+          e.preventDefault();
+          return false;
+        }
+      } else {
+        if (e.key === "Enter" || e.key === "Escape") {
+          this.endEdit();
+          return false;
+        }
+      }
     },
     endEdit() {
       this.isEditing = false;
@@ -97,10 +125,10 @@ export default {
   &__text {
     border-bottom: 1px solid rgba(255, 255, 255, 0);
 
+    outline: none;
     transition: border-color 0.1s ease-in;
 
     &[contenteditable="true"] {
-      outline: none;
       border-bottom-color: rgba(0, 0, 0, 0.4);
     }
   }
